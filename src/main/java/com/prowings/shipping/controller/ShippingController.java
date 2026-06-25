@@ -38,6 +38,11 @@ public class ShippingController {
 
         return "Response from Shipping Service : " + serverport;
     }
+
+    @GetMapping("/status")
+    public String getShipmentStatus() {
+        return "Shipment processed successfully";
+    }
 }
 
 
