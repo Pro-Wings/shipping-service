@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/api/shipments")
 public class ShippingController {
     private static final Logger logger = LoggerFactory.getLogger(ShippingController.class);
+
+    private AtomicInteger counter = new AtomicInteger();
+
 
     @Value("${server.port}")
     String serverport;
@@ -41,6 +45,11 @@ public class ShippingController {
 
     @GetMapping("/status")
     public String getShipmentStatus() {
+
+        System.out.println(">>>>>>>>>>sipment called <<<<<<<<<<<");
+        if (counter.incrementAndGet() <= 2) {
+            throw new RuntimeException(">>>>>>>>>>>  Temporary failure");
+        }
         return "Shipment processed successfully";
     }
 }
